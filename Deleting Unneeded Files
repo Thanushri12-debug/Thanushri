@@ -1,0 +1,26 @@
+    print('Name: THANUSHRI K S \nUSN: 1AY24AI112 \nSection: O\n ')
+    import os
+    
+    def find_large_files(start_path, size_limit_mb=100):
+        size_limit_bytes = size_limit_mb * 1024 * 1024  
+    
+        print(f"Searching for files larger than {size_limit_mb}MB in '{start_path}'...\n")
+    
+        for foldername, subfolders, filenames in os.walk(start_path):
+            for filename in filenames:
+                try:
+                    filepath = os.path.join(foldername, filename)
+                    filesize = os.path.getsize(filepath)
+    
+                    if filesize > size_limit_bytes:
+                        size_in_mb = filesize / (1024 * 1024)
+                        print(f"{filepath} — {size_in_mb:.2f} MB")
+    
+                except FileNotFoundError:
+                    continue
+                except PermissionError:
+                    continue
+    
+    if __name__ == "__main__":
+        directory_to_scan = input("Enter the path to the folder you want to scan: ")
+        find_large_files(directory_to_scan)
